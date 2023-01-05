@@ -8,12 +8,12 @@ const crypto = require("crypto");
 const handleNewUser = async (req, res, next) => {
   const { userType, firstName, lastName, password, email, contact } = req.body;
   if (!userType || !firstName || !lastName || !email || !password) {
-    res.status(400).json({ message: "Please provide all fields" });
+    res.status(400).json({ message: "Please provide all fields!" });
   } else {
     try {
       const user = await User.findOne({ email: email });
       if (user) {
-        res.status(400).json({ message: "User already exists" });
+        res.status(400).json({ message: "User already exists!" });
       } else {
         const hash = await bcrypt.hash(password, 10);
         const newUser = new User({
