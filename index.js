@@ -25,12 +25,12 @@ app.get("/", function (req, res) {
 });
 
 const userRoutes = require("./routes/users");
-// const orderRoutes = require("./routes/orders");
+const productRoutes = require("./routes/products");
 // const contactRoutes = require("./routes/contacts");
 // const brandenquiryRoutes = require("./routes/brandenquirys");
 
 app.use("/users", userRoutes);
-// app.use("/orders", orderRoutes);
+app.use("/products", productRoutes);
 // app.use("/contacts", contactRoutes);
 // app.use("/brandenquirys", brandenquiryRoutes);
 

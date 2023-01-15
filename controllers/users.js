@@ -23,6 +23,7 @@ const handleNewUser = async (req, res, next) => {
           password: hash,
           email: email,
           contact: contact,
+          addressName: "",
           street: "",
           city: "",
           state: "",
