@@ -13,4 +13,16 @@ router.get("/display", (req, res) => {
   productsController.handleGetAllProducts(req, res);
 });
 
+router.post("/modify", (req, res) => {
+  productsController.handleModifyProduct(req, res);
+});
+
+router.post("/delete-product", (req, res) => {
+  productsController.handleDeleteProduct(req, res);
+});
+
+router.get("/get-categories", (req, res) => {
+  productsController.getExistingCategories(req, res);
+});
+
 module.exports = router;

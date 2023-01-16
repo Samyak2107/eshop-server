@@ -63,7 +63,63 @@ const handleGetAllProducts = async (req, res, next) => {
   }
 };
 
+const handleModifyProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findOne({ itemId: req.body.itemId });
+    if (!product) {
+      res.status(400).json({ message: "Product does not exist!" });
+    } else {
+      res.status(201).json({
+        error: false,
+        data: product,
+        message: "Here is the product for editing.",
+      });
+    }
+  } catch {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const handleDeleteProduct = async (req, res, next) => {
+  const { itemId } = req.body;
+  try {
+    const product = await Product.findOne({ itemId: itemId });
+    if (!product) {
+      res.status(400).json({ message: "Product does not exist!" });
+    } else {
+      await Product.deleteOne({ itemId: itemId });
+      res
+        .status(201)
+        .json({ error: false, message: "The selected product was deleted!" });
+    }
+  } catch {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getExistingCategories = async (req, res, next) => {
+  try {
+    const product = await Product.distinct("itemCategory");
+    if (!product) {
+      res.status(400).json({ message: "No categories found!" });
+    } else {
+      res
+        .status(201)
+        .json({
+          error: false,
+          data: product,
+          message: "Here's the list of all item categories!",
+        });
+    }
+  } catch {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   handleNewProduct,
   handleGetAllProducts,
+  handleModifyProduct,
+  handleDeleteProduct,
+  getExistingCategories,
 };
