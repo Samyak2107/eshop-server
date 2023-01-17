@@ -32,34 +32,34 @@ const handleNewUser = async (req, res, next) => {
           orders: "",
         });
         const savedUser = await newUser.save();
-        const acctoken = await JWT.sign(
-          {
-            _id: savedUser._id,
-            email: savedUser.email,
-            firstName: savedUser.firstName,
-            lastName: savedUser.lastName,
-            contact: savedUser.contact,
-          },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "30s" }
-        );
-        const rfToken = await JWT.sign(
-          {
-            _id: savedUser._id,
-            email: savedUser.email,
-            firstName: savedUser.firstName,
-            lastName: savedUser.lastName,
-            contact: savedUser.contact,
-          },
-          process.env.REFRESH_TOKEN_SECRET,
-          { expiresIn: "7d" }
-        );
+        // const acctoken = await JWT.sign(
+        //   {
+        //     _id: savedUser._id,
+        //     email: savedUser.email,
+        //     firstName: savedUser.firstName,
+        //     lastName: savedUser.lastName,
+        //     contact: savedUser.contact,
+        //   },
+        //   process.env.ACCESS_TOKEN_SECRET,
+        //   { expiresIn: "30s" }
+        // );
+        // const rfToken = await JWT.sign(
+        //   {
+        //     _id: savedUser._id,
+        //     email: savedUser.email,
+        //     firstName: savedUser.firstName,
+        //     lastName: savedUser.lastName,
+        //     contact: savedUser.contact,
+        //   },
+        //   process.env.REFRESH_TOKEN_SECRET,
+        //   { expiresIn: "7d" }
+        // );
         res.status(201).json({
           error: false,
           data: savedUser,
           message: "User created",
-          acctoken: acctoken,
-          rftoken: rfToken,
+          // acctoken: acctoken,
+          // rftoken: rfToken,
         });
       }
     } catch (err) {
@@ -79,23 +79,23 @@ const handleLogin = async (req, res, next) => {
     } else {
       const result = await bcrypt.compare(password, user.password);
       if (result) {
-        const acctoken = await JWT.sign(
-          { _id: user._id, email: user.email, name: user.name },
-          process.env.ACCESS_TOKEN_SECRET,
-          { expiresIn: "30s" }
-        );
-        const rftoken = await JWT.sign(
-          { _id: user._id, email: user.email, name: user.name },
-          process.env.REFRESH_TOKEN_SECRET,
-          { expiresIn: "7d" }
-        );
+        // const acctoken = await JWT.sign(
+        //   { _id: user._id, email: user.email, name: user.name },
+        //   process.env.ACCESS_TOKEN_SECRET,
+        //   { expiresIn: "30s" }
+        // );
+        // const rftoken = await JWT.sign(
+        //   { _id: user._id, email: user.email, name: user.name },
+        //   process.env.REFRESH_TOKEN_SECRET,
+        //   { expiresIn: "7d" }
+        // );
         res
           .json({
             error: false,
             data: user,
             message: "User logged in successfully",
-            acctoken: acctoken,
-            rftoken: rftoken,
+            // acctoken: acctoken,
+            // rftoken: rftoken,
           })
           .status(200);
       } else {
