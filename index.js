@@ -30,8 +30,8 @@ const productRoutes = require("./routes/products");
 // const contactRoutes = require("./routes/contacts");
 // const brandenquiryRoutes = require("./routes/brandenquirys");
 
-app.use("/users", userRoutes);
-app.use("/products", productRoutes);
+app.use("/users", userRoutes, cors());
+app.use("/products", productRoutes, cors());
 // app.use("/contacts", contactRoutes);
 // app.use("/brandenquirys", brandenquiryRoutes);
 

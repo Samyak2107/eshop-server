@@ -103,16 +103,67 @@ const getExistingCategories = async (req, res, next) => {
     if (!product) {
       res.status(400).json({ message: "No categories found!" });
     } else {
-      res
-        .status(201)
-        .json({
-          error: false,
-          data: product,
-          message: "Here's the list of all item categories!",
-        });
+      res.status(201).json({
+        error: false,
+        data: product,
+        message: "Here's the list of all item categories!",
+      });
     }
   } catch {
     res.status(500).json({ message: err.message });
+  }
+};
+
+const handleProductModificationDb = async (req, res, next) => {
+  const {
+    itemId,
+    itemName,
+    itemPrice,
+    itemDesc,
+    itemImageUrl,
+    itemCategory,
+    availableQuantity,
+    itemManufacturer,
+  } = req.body;
+  if (
+    !itemId ||
+    !itemName ||
+    !itemPrice ||
+    !itemDesc ||
+    !itemImageUrl ||
+    !itemCategory ||
+    !availableQuantity ||
+    !itemManufacturer
+  ) {
+    res.status(400).json({ message: "Please provide all fields!" });
+  } else {
+    try {
+      const product = await Product.findOne({ itemId: itemId });
+      if (!product) {
+        res
+          .status(400)
+          .json({ message: "Some error occured! Could not find the product!" });
+      } else {
+        const updatedProduct = {
+          itemId: itemId,
+          itemName: itemName,
+          itemPrice: itemPrice,
+          itemDesc: itemDesc,
+          itemImageUrl: itemImageUrl,
+          itemCategory: itemCategory,
+          availableQuantity: availableQuantity,
+          itemManufacturer: itemManufacturer,
+        };
+        const updateResponse = await product.updateOne(updatedProduct);
+        res.status(201).json({
+          error: false,
+          data: updateResponse,
+          message: "Product data updated successfully!",
+        });
+      }
+    } catch {
+      res.status(500).json({ message: err.message });
+    }
   }
 };
 
@@ -122,4 +173,5 @@ module.exports = {
   handleModifyProduct,
   handleDeleteProduct,
   getExistingCategories,
+  handleProductModificationDb,
 };

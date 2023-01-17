@@ -25,4 +25,8 @@ router.get("/get-categories", (req, res) => {
   productsController.getExistingCategories(req, res);
 });
 
+router.put("/modify-db", (req, res) => {
+  productsController.handleProductModificationDb(req, res);
+});
+
 module.exports = router;
