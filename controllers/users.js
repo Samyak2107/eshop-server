@@ -143,8 +143,51 @@ const handleRefreshToken = async (req, res, next) => {
   }
 };
 
+const handleAddressEntry = async (req, res, next) => {
+  const { email, name, contact, street, city, state, landmark, zipCode } =
+    req.body;
+  if (
+    !email ||
+    !name ||
+    !contact ||
+    !street ||
+    !city ||
+    !state ||
+    !landmark ||
+    !zipCode
+  ) {
+    res.status(400).json({ message: "Please provide all fields!" });
+  } else {
+    try {
+      const user = await User.findOne({ email: email });
+      if (!user) {
+        res.status(400).json({ error: true, message: "User not found!" });
+      } else {
+        const updatedUser = {
+          addressName: name,
+          contact: contact,
+          street: street,
+          city: city,
+          state: state,
+          landmark: landmark,
+          zipCode: zipCode,
+        };
+        const updateResponse = await user.updateOne(updatedUser);
+        res.status(201).json({
+          error: false,
+          data: updateResponse,
+          message: "User data updated successfully!",
+        });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  }
+};
+
 module.exports = {
   handleNewUser,
   handleLogin,
   handleRefreshToken,
+  handleAddressEntry,
 };

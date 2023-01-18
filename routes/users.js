@@ -27,9 +27,9 @@ router.post("/refresh", (req, res) => {
   usersController.handleRefreshToken(req, res);
 });
 
-// router.post("/forgotPassword", (req, res) => {
-//   usersController.handleForgotPassword(req, res);
-// });
+router.put("/address-add", (req, res) => {
+  usersController.handleAddressEntry(req, res);
+});
 
 // router.get("/reset", (req, res) => {
 //   usersController.handleResetPassword(req, res);
